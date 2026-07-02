@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cron = require("node-cron");
+const session = require("express-session");
+const passport = require("./config/passport");
 
 dotenv.config();
 
 const app = express();
 
-pp.use(
+// ✅ Fixed: was "pp.use"
+app.use(
   cors({
     origin: function (origin, callback) {
       const allowedOrigins = [
@@ -27,7 +30,20 @@ pp.use(
   }),
 );
 
+app.options("*", cors());
+
 app.use(express.json());
+
+// ✅ Session & Passport moved before routes
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+
+app.use(passport.initialize());
 
 // Routes
 app.use("/api/auth", require("./routes/auth"));
@@ -54,34 +70,17 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Cron Jobs
-// Daily midnight reset - check streaks
 cron.schedule("0 0 * * *", async () => {
   console.log("🕛 Running daily streak check...");
   const { checkAndUpdateStreaks } = require("./controllers/streakController");
   await checkAndUpdateStreaks();
 });
 
-// Evening reminder check at 8 PM
 cron.schedule("0 20 * * *", async () => {
   console.log("🔔 Running evening streak alert check...");
   const { sendStreakAlerts } = require("./controllers/notificationController");
   await sendStreakAlerts();
 });
-
-const session = require("express-session");
-const passport = require("./config/passport");
-
-// Session (required by passport, even with JWT)
-app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
-
-// Passport
-app.use(passport.initialize());
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
