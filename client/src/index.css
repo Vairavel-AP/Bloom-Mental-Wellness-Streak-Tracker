@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f6f3eb;
+  --paper-dark: #1a1812;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--paper);
+  color: #211f1a;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+  background-color: var(--paper-dark);
+  color: #e8e7e1;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(135, 168, 84, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-display {
+  font-feature-settings: "ss01" 1;
+}
+
+/* Hand-drawn style divider */
+.root-divider {
+  background-image: repeating-linear-gradient(
+    90deg,
+    currentColor 0,
+    currentColor 6px,
+    transparent 6px,
+    transparent 10px
+  );
+  height: 1px;
+  opacity: 0.25;
+}
+
+/* Focus rings for accessibility */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #6b8c3c;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
