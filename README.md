@@ -136,51 +136,6 @@ wellness-tracker/
         └── index.css                # Tailwind base + custom scrollbar + animations
 ```
 
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- A running MongoDB instance (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
-
-### 1. Database
-
-```bash
-# Local MongoDB (if installed)
-mongod --dbpath ./data
-
-# Or set MONGODB_URI in server/.env to point at an Atlas cluster
-```
-
-### 2. Server
-
-```bash
-cd server
-cp .env.example .env
-# Edit .env: set MONGODB_URI and JWT_SECRET at minimum
-npm install
-npm run dev          # nodemon — auto-restarts on change
-# npm start          # plain node for production
-```
-
-Server runs at `http://localhost:5000`.
-
-### 3. Client
-
-```bash
-cd client
-cp .env.example .env
-# REACT_APP_API_URL=http://localhost:5000/api  (already set in .env.example)
-npm install
-npm start
-```
-
-App runs at `http://localhost:3000`.
-
----
-
 ## API Reference
 
 | Method | Endpoint | Auth | Description |
@@ -262,32 +217,6 @@ App runs at `http://localhost:3000`.
 - Timezone stored per-user, used for date string generation and cron logic
 - All data in MongoDB — durable and accessible from any device on login
 - Dark mode toggle — persisted to user profile, applied on every load
-
----
-
-## Environment Variables
-
-### Server (`server/.env`)
-
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/wellness-tracker
-JWT_SECRET=change_this_to_a_long_random_string
-JWT_EXPIRE=30d
-CLIENT_URL=http://localhost:3000
-
-# Optional — for email-based notification delivery
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
-```
-
-### Client (`client/.env`)
-
-```
-REACT_APP_API_URL=http://localhost:5000/api
-```
 
 ---
 
