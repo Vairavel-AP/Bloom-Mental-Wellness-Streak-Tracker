@@ -100,7 +100,7 @@ wellness-tracker/
 │   │   └── users.js                 # public profile endpoint
 │   ├── index.js                     # App entry, cron job registration
 │   ├── package.json
-│   └── .env.example
+│   └── .env
 └── client/
     ├── public/
     │   └── index.html
